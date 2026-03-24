@@ -24,10 +24,10 @@ const MONTHS = [
 const TODAY = new Date().toISOString().slice(0, 10);
 
 const BOREK_URUNLER = [
-  { id: 'buyuk', ad: 'Büyük Tepsi', maliyet: 1350, birim: 'adet' },
-  { id: 'kiyma', ad: 'Kıymalı Kol Böreği', maliyet: 340, birim: 'kg' },
-  { id: 'kucuk', ad: 'Küçük Tepsi', maliyet: 600, birim: 'adet' },
-  { id: 'baklava', ad: 'Baklava', maliyet: 630, birim: 'adet' },
+  { id: 'buyuk', ad: 'Büyük Tepsi', maliyet: 1380, birim: 'adet' },
+  { id: 'kiyma', ad: 'Kıymalı Kol Böreği', maliyet: 306, birim: 'kg' },
+  { id: 'kucuk', ad: 'Küçük Tepsi', maliyet: 614, birim: 'adet' },
+  { id: 'baklava', ad: 'Baklava', maliyet: 660, birim: 'adet' },
 ];
 
 const SABIT_KATEGORILER = [
