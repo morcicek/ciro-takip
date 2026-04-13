@@ -605,12 +605,18 @@ function EntryView({
             <div style={S.subHeader}>
               <span style={S.subTitle}>Günlük Eleman</span>
               <button onClick={addEleman} style={S.addBtn}>
-                <span
-                  style={{ color: '#2563eb', fontSize: 16, marginRight: 4 }}
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
                 >
-                  ⊕
-                </span>
-                Add
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Ekle
               </button>
             </div>
             {(dayData.gunlukEleman || []).length === 0 ? (
@@ -693,12 +699,18 @@ function EntryView({
             <div style={S.subHeader}>
               <span style={S.subTitle}>Diğer Masraflar</span>
               <button onClick={addMasraf} style={S.addBtn}>
-                <span
-                  style={{ color: '#2563eb', fontSize: 16, marginRight: 4 }}
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
                 >
-                  ⊕
-                </span>
-                Add
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Ekle
               </button>
             </div>
             {(dayData.masraflar || []).length === 0 ? (
@@ -1115,16 +1127,29 @@ function DashboardView({ y, m, setY, setM, dark }) {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
+                    gap: 5,
                     fontSize: 12,
-                    color: '#2563eb',
-                    background: 'none',
+                    color: '#fff',
+                    background: '#2563eb',
                     border: 'none',
                     cursor: 'pointer',
                     fontWeight: 600,
-                    padding: 0,
+                    padding: '5px 10px',
+                    borderRadius: 7,
                   }}
                 >
-                  <span style={{ fontSize: 15, marginRight: 3 }}>⊕</span> Ekle
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                  Ekle
                 </button>
               </div>
               {(monthData.sabitMasraflar || []).map((x) => (
@@ -1597,13 +1622,15 @@ const S = {
   addBtn: {
     display: 'flex',
     alignItems: 'center',
+    gap: 6,
     fontSize: 13,
-    color: '#2563eb',
-    background: 'none',
+    color: '#fff',
+    background: '#2563eb',
     border: 'none',
     cursor: 'pointer',
     fontWeight: 600,
-    padding: 0,
+    padding: '6px 12px',
+    borderRadius: 8,
   },
   masrafRow: { display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 },
   delBtn: {
