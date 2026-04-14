@@ -37,6 +37,7 @@ const SABIT_KATEGORILER = [
   { id: 'eleman_sgk', ad: 'Eleman SGK' },
   { id: 'muhasebe', ad: 'Muhasebe' },
   { id: 'vergi', ad: 'Vergi' },
+  { id: 'faturalar', ad: 'Faturalar' },
 ];
 
 // ─── Yardımcı ────────────────────────────────────────────────────────────────
