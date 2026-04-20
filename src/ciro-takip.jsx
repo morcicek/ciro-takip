@@ -487,119 +487,160 @@ function EntryView({
           />
         </div>
 
-        <Section icon="💳" color="#2563eb" title="Ciro (Revenue)" dark={dark}>
-          <div style={S.grid2}>
-            <Field label="NAKİT">
-              <input
-                type="number"
-                placeholder="0.00"
-                value={dayData.ciro.nakit}
-                onChange={(e) => updateCiro('nakit', e.target.value)}
-                style={S.input}
-              />
-            </Field>
-            <Field label="KREDİ KARTI">
-              <input
-                type="number"
-                placeholder="0.00"
-                value={dayData.ciro.kart}
-                onChange={(e) => updateCiro('kart', e.target.value)}
-                style={S.input}
-              />
-              {num(dayData.ciro.kart) > 0 && (
-                <div style={S.otoHint}>Komisyon: ₺{fmt(oto.kart)}</div>
-              )}
-            </Field>
-            <Field label="YEMEK KARTI">
-              <input
-                type="number"
-                placeholder="0.00"
-                value={dayData.ciro.yemek}
-                onChange={(e) => updateCiro('yemek', e.target.value)}
-                style={S.input}
-              />
-              {num(dayData.ciro.yemek) > 0 && (
-                <div style={S.otoHint}>Komisyon: ₺{fmt(oto.yemek)}</div>
-              )}
-            </Field>
-          </div>
-          <div style={{ marginTop: 12 }}>
+        {(() => {
+          const ciroFields = [
+            dayData.ciro.nakit,
+            dayData.ciro.kart,
+            dayData.ciro.yemek,
+            dayData.ciro.trendyol,
+            dayData.ciro.yemeksepeti,
+            dayData.ciro.getir,
+            dayData.ciro.migros,
+          ];
+          const dolu = ciroFields.filter((v) => num(v) > 0).length;
+          const toplam = ciroFields.length;
+          const sectionBg =
+            dolu === 0
+              ? dark
+                ? '#1e293b'
+                : '#fff'
+              : dolu === toplam
+                ? dark
+                  ? '#14532d'
+                  : '#f0fdf4'
+                : dark
+                  ? '#450a0a'
+                  : '#fff1f2';
+          return (
             <div
               style={{
-                fontSize: 13,
-                fontWeight: 600,
-                color: '#374151',
-                marginBottom: 8,
+                ...S.section,
+                background: sectionBg,
+                transition: 'background 0.3s',
               }}
             >
-              PAKET SİPARİŞ
-            </div>
-            <div style={S.grid2}>
-              <Field label="TRENDYOL YEMEK">
-                <input
-                  type="number"
-                  placeholder="0.00"
-                  value={dayData.ciro.trendyol}
-                  onChange={(e) => updateCiro('trendyol', e.target.value)}
-                  style={S.input}
-                />
-              </Field>
-              <Field label="YEMEK SEPETİ">
-                <input
-                  type="number"
-                  placeholder="0.00"
-                  value={dayData.ciro.yemeksepeti}
-                  onChange={(e) => updateCiro('yemeksepeti', e.target.value)}
-                  style={S.input}
-                />
-              </Field>
-              <Field label="GETİR YEMEK">
-                <input
-                  type="number"
-                  placeholder="0.00"
-                  value={dayData.ciro.getir}
-                  onChange={(e) => updateCiro('getir', e.target.value)}
-                  style={S.input}
-                />
-              </Field>
-              <Field label="MİGROS YEMEK">
-                <input
-                  type="number"
-                  placeholder="0.00"
-                  value={dayData.ciro.migros}
-                  onChange={(e) => updateCiro('migros', e.target.value)}
-                  style={S.input}
-                />
-              </Field>
-            </div>
-            {oto.paketTop > 0 && (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginTop: 8,
-                  padding: '8px 12px',
-                  background: '#eff6ff',
-                  borderRadius: 8,
-                  fontSize: 13,
-                }}
-              >
-                <span style={{ color: '#1d4ed8', fontWeight: 600 }}>
-                  Paket Toplam
-                </span>
-                <span style={{ color: '#1d4ed8', fontWeight: 700 }}>
-                  ₺{fmt(oto.paketTop)}
+              <div style={S.sectionHeader}>
+                <span style={{ marginRight: 8, fontSize: 20 }}>💳</span>
+                <h2 style={{ ...S.sectionTitle, color: '#2563eb' }}>
+                  Ciro (Revenue)
+                </h2>
+              </div>
+              <div style={S.grid2}>
+                <Field label="NAKİT">
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    value={dayData.ciro.nakit}
+                    onChange={(e) => updateCiro('nakit', e.target.value)}
+                    style={S.input}
+                  />
+                </Field>
+                <Field label="KREDİ KARTI">
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    value={dayData.ciro.kart}
+                    onChange={(e) => updateCiro('kart', e.target.value)}
+                    style={S.input}
+                  />
+                  {num(dayData.ciro.kart) > 0 && (
+                    <div style={S.otoHint}>Komisyon: ₺{fmt(oto.kart)}</div>
+                  )}
+                </Field>
+                <Field label="YEMEK KARTI">
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    value={dayData.ciro.yemek}
+                    onChange={(e) => updateCiro('yemek', e.target.value)}
+                    style={S.input}
+                  />
+                  {num(dayData.ciro.yemek) > 0 && (
+                    <div style={S.otoHint}>Komisyon: ₺{fmt(oto.yemek)}</div>
+                  )}
+                </Field>
+              </div>
+              <div style={{ marginTop: 12 }}>
+                <div
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: '#374151',
+                    marginBottom: 8,
+                  }}
+                >
+                  PAKET SİPARİŞ
+                </div>
+                <div style={S.grid2}>
+                  <Field label="TRENDYOL YEMEK">
+                    <input
+                      type="number"
+                      placeholder="0.00"
+                      value={dayData.ciro.trendyol}
+                      onChange={(e) => updateCiro('trendyol', e.target.value)}
+                      style={S.input}
+                    />
+                  </Field>
+                  <Field label="YEMEK SEPETİ">
+                    <input
+                      type="number"
+                      placeholder="0.00"
+                      value={dayData.ciro.yemeksepeti}
+                      onChange={(e) =>
+                        updateCiro('yemeksepeti', e.target.value)
+                      }
+                      style={S.input}
+                    />
+                  </Field>
+                  <Field label="GETİR YEMEK">
+                    <input
+                      type="number"
+                      placeholder="0.00"
+                      value={dayData.ciro.getir}
+                      onChange={(e) => updateCiro('getir', e.target.value)}
+                      style={S.input}
+                    />
+                  </Field>
+                  <Field label="MİGROS YEMEK">
+                    <input
+                      type="number"
+                      placeholder="0.00"
+                      value={dayData.ciro.migros}
+                      onChange={(e) => updateCiro('migros', e.target.value)}
+                      style={S.input}
+                    />
+                  </Field>
+                </div>
+                {oto.paketTop > 0 && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      marginTop: 8,
+                      padding: '8px 12px',
+                      background: '#eff6ff',
+                      borderRadius: 8,
+                      fontSize: 13,
+                    }}
+                  >
+                    <span style={{ color: '#1d4ed8', fontWeight: 600 }}>
+                      Paket Toplam
+                    </span>
+                    <span style={{ color: '#1d4ed8', fontWeight: 700 }}>
+                      ₺{fmt(oto.paketTop)}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div style={S.sectionTotal}>
+                <span style={S.sectionTotalLabel}>Toplam Ciro</span>
+                <span style={{ ...S.sectionTotalVal, color: '#2563eb' }}>
+                  ₺{fmt(calc.ciro)}
                 </span>
               </div>
-            )}
-          </div>
-          <div style={S.sectionTotal}>
-            <span style={S.sectionTotalLabel}>Toplam Ciro</span>
-            <span style={{ ...S.sectionTotalVal, color: '#2563eb' }}>
-              ₺{fmt(calc.ciro)}
-            </span>
-          </div>
-        </Section>
+            </div>
+          );
+        })()}
 
         <Section icon="🧾" color="#dc2626" title="Günlük Masraflar" dark={dark}>
           <div style={S.subSection}>
