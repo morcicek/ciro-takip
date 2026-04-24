@@ -1295,13 +1295,75 @@ function DashboardView({ y, m, setY, setM, dark }) {
                     letterSpacing: '0.05em',
                   }}
                 >
-                  TOPLAM
+                  TOPLAM SABİT
                 </span>
                 <span
                   style={{ fontSize: 15, fontWeight: 800, color: '#1d4ed8' }}
                 >
                   ₺{fmt(stats.sabitTotal)}
                 </span>
+              </div>
+
+              {/* Faturalar */}
+              <div
+                style={{
+                  marginTop: 14,
+                  paddingTop: 12,
+                  borderTop: '2px dashed #e5e7eb',
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 700,
+                    color: '#0891b2',
+                    marginBottom: 8,
+                    letterSpacing: '0.04em',
+                  }}
+                >
+                  FATURALAR
+                </div>
+                {(monthData.faturalar || defaultFaturalar()).map((x) => (
+                  <div key={x.id} style={SD.sabitRow}>
+                    <span style={SD.sabitLabel}>{x.ad}</span>
+                    <div style={SD.sabitInputWrap}>
+                      <span style={SD.sabitCur}>₺</span>
+                      <input
+                        type="number"
+                        placeholder="0"
+                        value={x.tutar}
+                        onChange={(e) => updFatura(x.id, e.target.value)}
+                        style={SD.sabitInput}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginTop: 10,
+                    paddingTop: 8,
+                    borderTop: '1px solid #f3f4f6',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      color: '#6b7280',
+                      letterSpacing: '0.05em',
+                    }}
+                  >
+                    TOPLAM FATURA
+                  </span>
+                  <span
+                    style={{ fontSize: 15, fontWeight: 800, color: '#0891b2' }}
+                  >
+                    ₺{fmt(stats.faturaTotal)}
+                  </span>
+                </div>
               </div>
             </div>
 
