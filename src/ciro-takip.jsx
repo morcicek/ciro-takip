@@ -30,6 +30,14 @@ const BOREK_URUNLER = [
   { id: 'baklava', ad: 'Baklava', maliyet: 660, birim: 'adet' },
 ];
 
+const FATURA_KATEGORILER = [
+  { id: 'elektrik', ad: 'Elektrik' },
+  { id: 'su', ad: 'Su' },
+  { id: 'dogalgaz', ad: 'Doğalgaz' },
+  { id: 'telefon', ad: 'Telefon' },
+  { id: 'internet', ad: 'İnternet/Sabit Hat' },
+];
+
 const SABIT_KATEGORILER = [
   { id: 'kira', ad: 'Kira' },
   { id: 'boss', ad: 'Boss' },
@@ -37,7 +45,6 @@ const SABIT_KATEGORILER = [
   { id: 'eleman_sgk', ad: 'Eleman SGK' },
   { id: 'muhasebe', ad: 'Muhasebe' },
   { id: 'vergi', ad: 'Vergi' },
-  { id: 'faturalar', ad: 'Faturalar' },
 ];
 
 // ─── Yardımcı ────────────────────────────────────────────────────────────────
@@ -74,12 +81,21 @@ const defaultSabitler = () =>
     sabit: true,
   }));
 
+const defaultFaturalar = () =>
+  FATURA_KATEGORILER.map((k) => ({ id: k.id, ad: k.ad, tutar: '' }));
+
 const mergeMonth = (data) => {
-  if (!data) return { sabitMasraflar: defaultSabitler() };
+  if (!data)
+    return { sabitMasraflar: defaultSabitler(), faturalar: defaultFaturalar() };
   const sabitIds = SABIT_KATEGORILER.map((k) => k.id);
   const tutarMap = {};
   (data.sabitMasraflar || []).forEach((x) => {
     if (sabitIds.includes(x.id)) tutarMap[x.id] = x.tutar;
+  });
+  const faturaIds = FATURA_KATEGORILER.map((k) => k.id);
+  const faturaTutarMap = {};
+  (data.faturalar || []).forEach((x) => {
+    if (faturaIds.includes(x.id)) faturaTutarMap[x.id] = x.tutar;
   });
   return {
     ...data,
@@ -88,6 +104,11 @@ const mergeMonth = (data) => {
       ad: k.ad,
       tutar: tutarMap[k.id] || '',
       sabit: true,
+    })),
+    faturalar: FATURA_KATEGORILER.map((k) => ({
+      id: k.id,
+      ad: k.ad,
+      tutar: faturaTutarMap[k.id] || '',
     })),
   };
 };
@@ -210,12 +231,18 @@ const calcStats = (dayVeriList, monthVeri) => {
     (s, x) => s + num(x.tutar),
     0,
   );
-  const netKar = totalCiro - totalMasraf - totalBorek - sabitTotal;
+  const faturaTotal = (monthVeri.faturalar || []).reduce(
+    (s, x) => s + num(x.tutar),
+    0,
+  );
+  const netKar =
+    totalCiro - totalMasraf - totalBorek - sabitTotal - faturaTotal;
   return {
     totalCiro,
     totalMasraf,
     totalBorek,
     sabitTotal,
+    faturaTotal,
     netKar,
     avgCiro: activeDays > 0 ? totalCiro / activeDays : 0,
     avgBorek:
@@ -982,6 +1009,19 @@ function DashboardView({ y, m, setY, setM, dark }) {
     loadAll();
   }, [loadAll]);
 
+  const updFatura = async (id, v) => {
+    const updated = {
+      ...monthData,
+      faturalar: (monthData.faturalar || defaultFaturalar()).map((x) =>
+        x.id === id ? { ...x, tutar: v } : x,
+      ),
+    };
+    setMonthData(updated);
+    await upsertMonth(y, m, updated);
+    const dayList = await fetchMonthDays(y, m);
+    setStats(calcStats(dayList, updated));
+  };
+
   const updSabit = async (id, f, v) => {
     const updated = {
       ...monthData,
@@ -1287,6 +1327,11 @@ function DashboardView({ y, m, setY, setM, dark }) {
                   label="Sabit Masraf"
                   val={`-₺${fmt(stats.sabitTotal)}`}
                   color="#7c3aed"
+                />
+                <KirilimRow
+                  label="Faturalar"
+                  val={`-₺${fmt(stats.faturaTotal)}`}
+                  color="#0891b2"
                 />
                 <div
                   style={{
