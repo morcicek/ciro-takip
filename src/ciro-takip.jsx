@@ -574,15 +574,6 @@ function EntryView({
                 });
                 return (
                   <div style={S.grid2}>
-                    <Field label="NAKİT">
-                      <input
-                        type="text"
-                        placeholder="0.00"
-                        value={dayData.ciro.nakit}
-                        onChange={(e) => updateCiro('nakit', e.target.value)}
-                        style={iStyle(dayData.ciro.nakit)}
-                      />
-                    </Field>
                     <Field label="KREDİ KARTI">
                       <input
                         type="text"
@@ -594,6 +585,15 @@ function EntryView({
                       {num(dayData.ciro.kart) > 0 && (
                         <div style={S.otoHint}>Komisyon: ₺{fmt(oto.kart)}</div>
                       )}
+                    </Field>
+                    <Field label="NAKİT">
+                      <input
+                        type="text"
+                        placeholder="0.00"
+                        value={dayData.ciro.nakit}
+                        onChange={(e) => updateCiro('nakit', e.target.value)}
+                        style={iStyle(dayData.ciro.nakit)}
+                      />
                     </Field>
                     <Field label="YEMEK KARTI">
                       <input
