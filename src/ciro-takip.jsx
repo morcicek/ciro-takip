@@ -525,7 +525,10 @@ function EntryView({
             dayData.ciro.migros,
           ];
           const isInvalidVal = (v) =>
-            v !== '' && v !== null && v !== undefined && isNaN(parseFloat(v));
+            v !== '' &&
+            v !== null &&
+            v !== undefined &&
+            !/^-?\d*\.?\d*$/.test(String(v).trim());
           const hasInvalid = ciroFields.some((v) => isInvalidVal(v));
           const dolu = ciroFields.filter((v) => num(v) > 0).length;
           const toplam = ciroFields.length;
@@ -560,7 +563,9 @@ function EntryView({
               </div>
               {(() => {
                 const isInvalid = (v) =>
-                  v !== '' && v !== null && isNaN(parseFloat(v));
+                  v !== '' &&
+                  v !== null &&
+                  !/^-?\d*\.?\d*$/.test(String(v).trim());
                 const iStyle = (v) => ({
                   ...S.input,
                   ...(isInvalid(v)
@@ -618,7 +623,9 @@ function EntryView({
                 </div>
                 {(() => {
                   const isInvalid = (v) =>
-                    v !== '' && v !== null && isNaN(parseFloat(v));
+                    v !== '' &&
+                    v !== null &&
+                    !/^-?\d*\.?\d*$/.test(String(v).trim());
                   const iStyle = (v) => ({
                     ...S.input,
                     ...(isInvalid(v)
