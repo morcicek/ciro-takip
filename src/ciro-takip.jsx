@@ -552,41 +552,53 @@ function EntryView({
                   Ciro (Revenue)
                 </h2>
               </div>
-              <div style={S.grid2}>
-                <Field label="NAKİT">
-                  <input
-                    type="number"
-                    placeholder="0.00"
-                    value={dayData.ciro.nakit}
-                    onChange={(e) => updateCiro('nakit', e.target.value)}
-                    style={S.input}
-                  />
-                </Field>
-                <Field label="KREDİ KARTI">
-                  <input
-                    type="number"
-                    placeholder="0.00"
-                    value={dayData.ciro.kart}
-                    onChange={(e) => updateCiro('kart', e.target.value)}
-                    style={S.input}
-                  />
-                  {num(dayData.ciro.kart) > 0 && (
-                    <div style={S.otoHint}>Komisyon: ₺{fmt(oto.kart)}</div>
-                  )}
-                </Field>
-                <Field label="YEMEK KARTI">
-                  <input
-                    type="number"
-                    placeholder="0.00"
-                    value={dayData.ciro.yemek}
-                    onChange={(e) => updateCiro('yemek', e.target.value)}
-                    style={S.input}
-                  />
-                  {num(dayData.ciro.yemek) > 0 && (
-                    <div style={S.otoHint}>Komisyon: ₺{fmt(oto.yemek)}</div>
-                  )}
-                </Field>
-              </div>
+              {(() => {
+                const isInvalid = (v) =>
+                  v !== '' && v !== null && isNaN(parseFloat(v));
+                const iStyle = (v) => ({
+                  ...S.input,
+                  ...(isInvalid(v)
+                    ? { borderColor: '#ef4444', background: '#fff1f2' }
+                    : {}),
+                });
+                return (
+                  <div style={S.grid2}>
+                    <Field label="NAKİT">
+                      <input
+                        type="text"
+                        placeholder="0.00"
+                        value={dayData.ciro.nakit}
+                        onChange={(e) => updateCiro('nakit', e.target.value)}
+                        style={iStyle(dayData.ciro.nakit)}
+                      />
+                    </Field>
+                    <Field label="KREDİ KARTI">
+                      <input
+                        type="text"
+                        placeholder="0.00"
+                        value={dayData.ciro.kart}
+                        onChange={(e) => updateCiro('kart', e.target.value)}
+                        style={iStyle(dayData.ciro.kart)}
+                      />
+                      {num(dayData.ciro.kart) > 0 && (
+                        <div style={S.otoHint}>Komisyon: ₺{fmt(oto.kart)}</div>
+                      )}
+                    </Field>
+                    <Field label="YEMEK KARTI">
+                      <input
+                        type="text"
+                        placeholder="0.00"
+                        value={dayData.ciro.yemek}
+                        onChange={(e) => updateCiro('yemek', e.target.value)}
+                        style={iStyle(dayData.ciro.yemek)}
+                      />
+                      {num(dayData.ciro.yemek) > 0 && (
+                        <div style={S.otoHint}>Komisyon: ₺{fmt(oto.yemek)}</div>
+                      )}
+                    </Field>
+                  </div>
+                );
+              })()}
               <div style={{ marginTop: 12 }}>
                 <div
                   style={{
@@ -598,46 +610,60 @@ function EntryView({
                 >
                   PAKET SİPARİŞ
                 </div>
-                <div style={S.grid2}>
-                  <Field label="TRENDYOL YEMEK">
-                    <input
-                      type="number"
-                      placeholder="0.00"
-                      value={dayData.ciro.trendyol}
-                      onChange={(e) => updateCiro('trendyol', e.target.value)}
-                      style={S.input}
-                    />
-                  </Field>
-                  <Field label="YEMEK SEPETİ">
-                    <input
-                      type="number"
-                      placeholder="0.00"
-                      value={dayData.ciro.yemeksepeti}
-                      onChange={(e) =>
-                        updateCiro('yemeksepeti', e.target.value)
-                      }
-                      style={S.input}
-                    />
-                  </Field>
-                  <Field label="GETİR YEMEK">
-                    <input
-                      type="number"
-                      placeholder="0.00"
-                      value={dayData.ciro.getir}
-                      onChange={(e) => updateCiro('getir', e.target.value)}
-                      style={S.input}
-                    />
-                  </Field>
-                  <Field label="MİGROS YEMEK">
-                    <input
-                      type="number"
-                      placeholder="0.00"
-                      value={dayData.ciro.migros}
-                      onChange={(e) => updateCiro('migros', e.target.value)}
-                      style={S.input}
-                    />
-                  </Field>
-                </div>
+                {(() => {
+                  const isInvalid = (v) =>
+                    v !== '' && v !== null && isNaN(parseFloat(v));
+                  const iStyle = (v) => ({
+                    ...S.input,
+                    ...(isInvalid(v)
+                      ? { borderColor: '#ef4444', background: '#fff1f2' }
+                      : {}),
+                  });
+                  return (
+                    <div style={S.grid2}>
+                      <Field label="TRENDYOL YEMEK">
+                        <input
+                          type="text"
+                          placeholder="0.00"
+                          value={dayData.ciro.trendyol}
+                          onChange={(e) =>
+                            updateCiro('trendyol', e.target.value)
+                          }
+                          style={iStyle(dayData.ciro.trendyol)}
+                        />
+                      </Field>
+                      <Field label="YEMEK SEPETİ">
+                        <input
+                          type="text"
+                          placeholder="0.00"
+                          value={dayData.ciro.yemeksepeti}
+                          onChange={(e) =>
+                            updateCiro('yemeksepeti', e.target.value)
+                          }
+                          style={iStyle(dayData.ciro.yemeksepeti)}
+                        />
+                      </Field>
+                      <Field label="GETİR YEMEK">
+                        <input
+                          type="text"
+                          placeholder="0.00"
+                          value={dayData.ciro.getir}
+                          onChange={(e) => updateCiro('getir', e.target.value)}
+                          style={iStyle(dayData.ciro.getir)}
+                        />
+                      </Field>
+                      <Field label="MİGROS YEMEK">
+                        <input
+                          type="text"
+                          placeholder="0.00"
+                          value={dayData.ciro.migros}
+                          onChange={(e) => updateCiro('migros', e.target.value)}
+                          style={iStyle(dayData.ciro.migros)}
+                        />
+                      </Field>
+                    </div>
+                  );
+                })()}
                 {oto.paketTop > 0 && (
                   <div
                     style={{
