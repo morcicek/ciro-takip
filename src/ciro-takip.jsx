@@ -524,10 +524,16 @@ function EntryView({
             dayData.ciro.getir,
             dayData.ciro.migros,
           ];
+          const isInvalidVal = (v) =>
+            v !== '' && v !== null && v !== undefined && isNaN(parseFloat(v));
+          const hasInvalid = ciroFields.some((v) => isInvalidVal(v));
           const dolu = ciroFields.filter((v) => num(v) > 0).length;
           const toplam = ciroFields.length;
-          const sectionBg =
-            dolu === 0
+          const sectionBg = hasInvalid
+            ? dark
+              ? '#450a0a'
+              : '#fff1f2'
+            : dolu === 0
               ? dark
                 ? '#1e293b'
                 : '#fff'
